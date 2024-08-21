@@ -8,10 +8,10 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import ru.kata.spring.boot_security.demo.model.Role;
 import ru.kata.spring.boot_security.demo.model.User;
+import org.springframework.transaction.annotation.Transactional;
 import ru.kata.spring.boot_security.demo.repositories.RoleRepository;
 import ru.kata.spring.boot_security.demo.repositories.UserRepository;
 
-import javax.transaction.Transactional;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
@@ -39,7 +39,7 @@ public class UserServiceImp implements UserService {
 	public void add(User user, List<Long> roles) {
 		user.setPassword(passwordEncoder.encode(user.getPassword()));
 		List<Role> roles1 = roleRepository.findAllById(roles);
-		user.setRoles(new HashSet<>(roles1));
+		user.setRoles(roles1);
 		userRepository.save(user);
 	}
 	
@@ -55,7 +55,7 @@ public class UserServiceImp implements UserService {
 		updatedUser.setEmail(user.getEmail());
 		updatedUser.setAge(user.getAge());
 		List<Role> roles1 = roleRepository.findAllById(roles);
-		updatedUser.setRoles(new HashSet<>(roles1));
+		updatedUser.setRoles(roles1);
 		userRepository.save(updatedUser);
 	}
 	
@@ -66,7 +66,6 @@ public class UserServiceImp implements UserService {
 	}
 	
 	@Override
-	@Transactional
 	public User showUser(long id) {
 		return userRepository.getById(id);
 	}

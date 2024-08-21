@@ -28,7 +28,7 @@
                 <a aria-current="page" class="nav-link active"
                    th:text="USER"/>
             </li>
-            <li class="nav-item mb-0"th:each="role : ${showUser.getRoles()}">
+            <li class="nav-item mb-0" th:each="role : ${showUser.getRoles()}">
                 <a aria-current="page" class="nav-link"
                    th:href="@{/admin}" th:if="${role.getName == 'ROLE_ADMIN'}" th:text="ADMIN"/>
             </li>
